@@ -24,19 +24,18 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "RegisterModel",
                 columns: table => new
                 {
-                    CustId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.CustId);
+                    table.PrimaryKey("PK_RegisterModel", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,50 +82,49 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Booking",
+                name: "Bookings",
                 columns: table => new
                 {
                     BookingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Custid = table.Column<int>(type: "int", nullable: false),
+                    CustId = table.Column<int>(type: "int", nullable: false),
                     RoomNo = table.Column<int>(type: "int", nullable: false),
                     HotelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Booking", x => x.BookingId);
+                    table.PrimaryKey("PK_Bookings", x => x.BookingId);
                     table.ForeignKey(
-                        name: "FK_Booking_Customers_Custid",
-                        column: x => x.Custid,
-                        principalTable: "Customers",
-                        principalColumn: "CustId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Booking_Hotels_HotelId",
+                        name: "FK_Bookings_Hotels_HotelId",
                         column: x => x.HotelId,
                         principalTable: "Hotels",
                         principalColumn: "HotelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Booking_Rooms_RoomNo",
+                        name: "FK_Bookings_RegisterModel_CustId",
+                        column: x => x.CustId,
+                        principalTable: "RegisterModel",
+                        principalColumn: "UserId");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Rooms_RoomNo",
                         column: x => x.RoomNo,
                         principalTable: "Rooms",
                         principalColumn: "RoomId");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_Custid",
-                table: "Booking",
-                column: "Custid");
+                name: "IX_Bookings_CustId",
+                table: "Bookings",
+                column: "CustId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_HotelId",
-                table: "Booking",
+                name: "IX_Bookings_HotelId",
+                table: "Bookings",
                 column: "HotelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_RoomNo",
-                table: "Booking",
+                name: "IX_Bookings_RoomNo",
+                table: "Bookings",
                 column: "RoomNo");
 
             migrationBuilder.CreateIndex(
@@ -144,10 +142,10 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "RegisterModel");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

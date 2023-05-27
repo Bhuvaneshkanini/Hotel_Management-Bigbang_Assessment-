@@ -21,6 +21,31 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("RegisterModel");
+                });
+
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Amenities", b =>
                 {
                     b.Property<int>("Amenitiesid")
@@ -45,7 +70,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int>("Custid")
+                    b.Property<int>("CustId")
                         .HasColumnType("int");
 
                     b.Property<int>("HotelId")
@@ -56,38 +81,13 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
                     b.HasKey("BookingId");
 
-                    b.HasIndex("Custid");
+                    b.HasIndex("CustId");
 
                     b.HasIndex("HotelId");
 
                     b.HasIndex("RoomNo");
 
-                    b.ToTable("Booking");
-                });
-
-            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Customer", b =>
-                {
-                    b.Property<int>("CustId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustId"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CustId");
-
-                    b.ToTable("Customers");
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Hotel", b =>
@@ -143,10 +143,10 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Booking", b =>
                 {
-                    b.HasOne("Hotel_Management_Bigbang_Assessment1_.Models.Customer", "Customer")
+                    b.HasOne("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", "Register")
                         .WithMany("Bookings")
-                        .HasForeignKey("Custid")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CustId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Hotel_Management_Bigbang_Assessment1_.Models.Hotel", "Hotel")
@@ -161,9 +161,9 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Customer");
-
                     b.Navigation("Hotel");
+
+                    b.Navigation("Register");
 
                     b.Navigation("Room");
                 });
@@ -190,14 +190,14 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                     b.Navigation("Hotel");
                 });
 
+            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Amenities", b =>
                 {
                     b.Navigation("Hotels");
-                });
-
-            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Customer", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Hotel", b =>

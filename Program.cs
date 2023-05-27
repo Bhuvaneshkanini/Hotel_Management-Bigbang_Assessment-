@@ -25,12 +25,15 @@ namespace Hotel_Management_Bigbang_Assessment1_
 
             builder.Services.AddControllers().AddNewtonsoftJson(Options => Options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-
+            //
             builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+            //
 
 
 

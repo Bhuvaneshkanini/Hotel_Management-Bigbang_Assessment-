@@ -33,6 +33,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
 
         public async Task UpdateHotel(Hotel hotel)
         {
+
             _dbContext.Entry(hotel).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }

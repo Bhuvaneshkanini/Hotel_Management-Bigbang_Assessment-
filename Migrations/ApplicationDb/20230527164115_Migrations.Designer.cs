@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel_Management_Bigbang_Assessment1_.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230527085203_Migrations")]
+    [Migration("20230527164115_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />

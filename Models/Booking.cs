@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Hotel_Management_Bigbang_Assessment1_.Authentication;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hotel_Management_Bigbang_Assessment1_.Models
@@ -8,9 +9,9 @@ namespace Hotel_Management_Bigbang_Assessment1_.Models
         [Key]
         public int BookingId { get; set; }
 
-        public int Custid { get; set; }
-        public Customer? Customer { get; set; }
+        public int CustId { get; set; }
 
+        public RegisterModel? Register { get; set; }
         public int RoomNo { get; set; }
         public Room? Room { get; set; }
 
