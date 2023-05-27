@@ -12,6 +12,11 @@ namespace Hotel_Management_Bigbang_Assessment1_.Models
         public int Amenitiesid { get; set; }
 
         public Amenities? Amenities { get; set; }
+
+        public int Available_Rooms
+        {
+            get { return Rooms?.Count(r => r.Availability == "yes") ?? 0; }
+        }
         public ICollection<Room>? Rooms { get; set; }
 
         public ICollection<Booking>? Bookings { get; set; }

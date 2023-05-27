@@ -1,6 +1,7 @@
 
 using Hotel_Management_Bigbang_Assessment1_.Authentication;
 using Hotel_Management_Bigbang_Assessment1_.Models;
+using Hotel_Management_Bigbang_Assessment1_.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel_Management_Bigbang_Assessment1_
@@ -21,6 +22,19 @@ namespace Hotel_Management_Bigbang_Assessment1_
 
             builder.Services.AddDbContext<HotelDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connection1")));
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connection2")));
+
+            builder.Services.AddControllers().AddNewtonsoftJson(Options => Options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+
+            builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+
+
+
+
 
             var app = builder.Build();
 
