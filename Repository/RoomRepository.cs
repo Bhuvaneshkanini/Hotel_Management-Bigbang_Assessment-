@@ -17,7 +17,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
             return await _context.Rooms.ToListAsync();
         }
 
-        public async Task<Room> GetRoomById(int id)
+        public async Task<Room?> GetRoomById(int id)
         {
             return await _context.Rooms.FindAsync(id);
         }

@@ -49,7 +49,18 @@ namespace Hotel_Management_Bigbang_Assessment1_
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            
+            var validAudience = configuration["JWT:ValidAudience"];
+            var validIssuer = configuration["JWT:ValidIssuer"];
+            var secret = configuration["JWT:Secret"];
+
+            if (validAudience is null || validIssuer is null || secret is null)
+            {
+                // Handle the case where the values are not properly set in the configuration
+                throw new InvalidOperationException("Invalid JWT configuration: Audience, Issuer, or Secret is missing");
+            }
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+
 
             // Adding Authentication
             builder.Services.AddAuthentication(options =>
@@ -61,6 +72,7 @@ namespace Hotel_Management_Bigbang_Assessment1_
 
 
             // Adding Jwt Bearer
+
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;
@@ -69,9 +81,9 @@ namespace Hotel_Management_Bigbang_Assessment1_
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = configuration["JWT:ValidAudience"],
-                    ValidIssuer = configuration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+                    ValidAudience = validAudience,
+                    ValidIssuer = validIssuer,
+                    IssuerSigningKey = authSigningKey
                 };
             });
 

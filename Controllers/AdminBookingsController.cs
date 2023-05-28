@@ -1,10 +1,14 @@
-﻿using Hotel_Management_Bigbang_Assessment1_.Models;
+﻿using Hotel_Management_Bigbang_Assessment1_.Authentication;
+using Hotel_Management_Bigbang_Assessment1_.Models;
 using Hotel_Management_Bigbang_Assessment1_.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Hotel_Management_Bigbang_Assessment1_.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminBookingsController : ControllerBase

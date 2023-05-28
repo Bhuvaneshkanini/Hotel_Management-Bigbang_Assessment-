@@ -35,8 +35,15 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
 
         public async Task<IEnumerable<Hotel>> GetHotelsByPrice(double min,double max)
         {
-            
-            return await _dbContext.Hotels.Include(a=>a.Rooms.Where(p => p.Price >= min && p.Price <= max)).ToListAsync();
+            var hotels = await _dbContext.Hotels.Include(a => a.Rooms).ToListAsync();
+
+            var filteredHotels = hotels.Select(hotel =>
+            {
+                hotel.Rooms = hotel.Rooms?.Where(room => room.Price >= min && room.Price <= max).ToList();
+                return hotel;
+            });
+            return filteredHotels;
+
         }
 
         public async Task<int> AddBooking(Booking book)

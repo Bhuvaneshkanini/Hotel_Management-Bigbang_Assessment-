@@ -118,17 +118,28 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            var secret = _configuration["JWT:Secret"];
+            var validIssuer = _configuration["JWT:ValidIssuer"];
+            var validAudience = _configuration["JWT:ValidAudience"];
+
+            if (secret is null || validIssuer is null || validAudience is null)
+            {
+                // Handle the case where the configuration values are not properly set
+                throw new InvalidOperationException("Invalid JWT configuration");
+            }
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
+                issuer: validIssuer,
+                audience: validAudience,
                 expires: DateTime.Now.AddHours(3),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
+            );
 
             return token;
         }
+
     }
 }

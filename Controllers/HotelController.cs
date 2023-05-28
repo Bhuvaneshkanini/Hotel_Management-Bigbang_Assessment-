@@ -68,7 +68,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         {
             try { 
                 await _hotelRepository.UpdateHotel(hotel);
-                return NoContent();
+                return Ok($"{id} Updated Sucessfully!");
             }
             catch (Exception ex)
             {
