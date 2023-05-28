@@ -33,6 +33,9 @@ namespace Hotel_Management_Bigbang_Assessment1_
             builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+            builder.Services.AddScoped<IAmenitiesRepository, AmenitiesRepository>();
+
             //
 
 

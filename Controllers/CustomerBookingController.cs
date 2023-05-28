@@ -24,16 +24,34 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotelByLocation(string id)
+        [HttpGet("hotels/location")]
+        public async Task<ActionResult<Hotel>> GetHotelByLocation(string Location)
         {
-            var hotel = await _Booking.GetHotelByIdLocation(id);
+            var hotel = await _Booking.GetHotelByLocation(Location);
             if (hotel == null)
                 return NotFound();
             return Ok(hotel);
         }
 
-        
+        [HttpGet("hotels/amenities")]
+        public async Task<ActionResult<Hotel>> GetHotelsByAmenities(string amenities)
+        {
+            var hotel = await _Booking.GetHotelsByAmenities(amenities);
+            if (hotel == null)
+                return NotFound();
+            return Ok(hotel);
+        }
+
+        [HttpGet("{minPrice}/{maxPrice}")]
+        public async Task<ActionResult<Hotel>> GetHotelsByAmenities(double minPrice, double maxPrice)
+        {
+            var hotel = await _Booking.GetHotelsByPrice(minPrice, maxPrice);
+            if (hotel == null)
+                return NotFound();
+            return Ok(hotel);
+        }
+
+
 
     }
 }
