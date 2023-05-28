@@ -41,6 +41,8 @@ namespace Hotel_Management_Bigbang_Assessment1_
 
             builder.Services.AddScoped<IAmenitiesRepository, AmenitiesRepository>();
 
+            builder.Services.AddScoped<IAdminBookingRepository, AdminBookingRepository>();
+
             //
             // Add services to the container.// For Identity
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
