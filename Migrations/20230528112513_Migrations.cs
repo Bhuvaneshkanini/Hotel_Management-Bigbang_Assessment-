@@ -24,21 +24,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RegisterModel",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RegisterModel", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Hotels",
                 columns: table => new
                 {
@@ -87,7 +72,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                 {
                     BookingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustId = table.Column<int>(type: "int", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoomNo = table.Column<int>(type: "int", nullable: false),
                     HotelId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -101,21 +86,11 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                         principalColumn: "HotelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bookings_RegisterModel_CustId",
-                        column: x => x.CustId,
-                        principalTable: "RegisterModel",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
                         name: "FK_Bookings_Rooms_RoomNo",
                         column: x => x.RoomNo,
                         principalTable: "Rooms",
                         principalColumn: "RoomId");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bookings_CustId",
-                table: "Bookings",
-                column: "CustId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_HotelId",
@@ -143,9 +118,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bookings");
-
-            migrationBuilder.DropTable(
-                name: "RegisterModel");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

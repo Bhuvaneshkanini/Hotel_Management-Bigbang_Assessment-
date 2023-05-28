@@ -37,11 +37,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Models
                 .HasForeignKey(p => p.RoomNo)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.Register)
-                .WithMany(a => a.Bookings)
-                .HasForeignKey(p => p.CustId)
-                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

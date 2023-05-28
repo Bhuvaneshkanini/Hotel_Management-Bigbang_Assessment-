@@ -13,6 +13,7 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
 
         Task<int> AddBooking(Booking book);
 
-        Task Deletebooking(int bookId);
+        
+        //Task Deletebooking(int bookId);
     }
 }

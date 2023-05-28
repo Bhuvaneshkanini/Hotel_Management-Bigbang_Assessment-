@@ -19,6 +19,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Authentication
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
 
-        public ICollection<Booking>? Bookings { get; set; }
+        
     }
 }

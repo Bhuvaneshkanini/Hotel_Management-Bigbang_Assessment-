@@ -40,16 +40,18 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
         public async Task<int> AddBooking(Booking book)
         {
             _dbContext.Bookings.Add(book);
+
+            var room = await _dbContext.Rooms.FindAsync(book.RoomNo);
+            if (room != null)
+            {
+                room.Availability = "No";
+                _dbContext.Rooms.Update(room);
+            }
             await _dbContext.SaveChangesAsync();
             return book.BookingId;
+
         }
 
-        public async Task Deletebooking(int bookId)
-        {
-            var book = await _dbContext.Bookings.FindAsync(bookId);
-            _dbContext.Bookings.Remove(book);
-            await _dbContext.SaveChangesAsync();
-        }
-
+        
     }
 }

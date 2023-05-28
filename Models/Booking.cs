@@ -9,9 +9,8 @@ namespace Hotel_Management_Bigbang_Assessment1_.Models
         [Key]
         public int BookingId { get; set; }
 
-        public int CustId { get; set; }
+        public string? Username { get; set; }
 
-        public RegisterModel? Register { get; set; }
         public int RoomNo { get; set; }
         public Room? Room { get; set; }
 

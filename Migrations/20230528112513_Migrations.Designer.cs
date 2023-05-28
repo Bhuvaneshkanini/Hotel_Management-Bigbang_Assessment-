@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20230527164054_Migrations")]
+    [Migration("20230528112513_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />
@@ -23,31 +23,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("RegisterModel");
-                });
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Amenities", b =>
                 {
@@ -73,18 +48,16 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int>("CustId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomNo")
                         .HasColumnType("int");
 
-                    b.HasKey("BookingId");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CustId");
+                    b.HasKey("BookingId");
 
                     b.HasIndex("HotelId");
 
@@ -146,12 +119,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Booking", b =>
                 {
-                    b.HasOne("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", "Register")
-                        .WithMany("Bookings")
-                        .HasForeignKey("CustId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Hotel_Management_Bigbang_Assessment1_.Models.Hotel", "Hotel")
                         .WithMany("Bookings")
                         .HasForeignKey("HotelId")
@@ -165,8 +132,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                         .IsRequired();
 
                     b.Navigation("Hotel");
-
-                    b.Navigation("Register");
 
                     b.Navigation("Room");
                 });
@@ -191,11 +156,6 @@ namespace Hotel_Management_Bigbang_Assessment1_.Migrations
                         .IsRequired();
 
                     b.Navigation("Hotel");
-                });
-
-            modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Authentication.RegisterModel", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("Hotel_Management_Bigbang_Assessment1_.Models.Amenities", b =>
