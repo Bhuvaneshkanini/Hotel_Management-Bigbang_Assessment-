@@ -41,8 +41,11 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
         public async Task DeleteHotel(int hotelId)
         {
             var hotel = await _dbContext.Hotels.FindAsync(hotelId);
-            _dbContext.Hotels.Remove(hotel);
-            await _dbContext.SaveChangesAsync();
+            if (hotel != null)
+            {
+                _dbContext.Hotels.Remove(hotel);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
     }

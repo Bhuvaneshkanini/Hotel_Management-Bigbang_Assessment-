@@ -19,45 +19,79 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Hotel>>> GetHotels()
         {
-            var hotels = await _Booking.GetHotelsBook();
-            return Ok(hotels);
+            try { 
+                var hotels = await _Booking.GetHotelsBook();
+                return Ok(hotels);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
 
         [HttpGet("hotels/location")]
         public async Task<ActionResult<Hotel>> GetHotelByLocation(string Location)
         {
-            var hotel = await _Booking.GetHotelByLocation(Location);
-            if (hotel == null)
-                return NotFound();
-            return Ok(hotel);
+            try { 
+                var hotel = await _Booking.GetHotelByLocation(Location);
+                if (hotel == null)
+                    return NotFound();
+                return Ok(hotel);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet("hotels/amenities")]
         public async Task<ActionResult<Hotel>> GetHotelsByAmenities(string amenities)
         {
-            var hotel = await _Booking.GetHotelsByAmenities(amenities);
-            if (hotel == null)
-                return NotFound();
-            return Ok(hotel);
+            try
+            {
+                var hotel = await _Booking.GetHotelsByAmenities(amenities);
+                if (hotel == null)
+                    return NotFound();
+                return Ok(hotel);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{minPrice}/{maxPrice}")]
         public async Task<ActionResult<Hotel>> GetHotelsByAmenities(double minPrice, double maxPrice)
         {
-            var hotel = await _Booking.GetHotelsByPrice(minPrice, maxPrice);
-            if (hotel == null)
-                return NotFound();
-            return Ok(hotel);
+            try
+            {
+                var hotel = await _Booking.GetHotelsByPrice(minPrice, maxPrice);
+                if (hotel == null)
+                    return NotFound();
+                return Ok(hotel);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpPost]
 
         public async Task<ActionResult<Booking>> AddBooking(Booking Book)
         {
-            var newHotelId = await _Booking.AddBooking(Book);
-
-            return CreatedAtAction(nameof(AddBooking), new { id = newHotelId }, newHotelId);
+            try { 
+                var newHotelId = await _Booking.AddBooking(Book);
+                return Ok("Booked Sucessfully!");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

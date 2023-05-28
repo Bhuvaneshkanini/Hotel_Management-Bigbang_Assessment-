@@ -19,8 +19,15 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Hotel>>> GetHotels()
         {
-            var hotels = await _Booking.GetBookings();
-            return Ok(hotels);
+            try
+            {
+                var hotels = await _Booking.GetBookings();
+                return Ok(hotels);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -28,9 +35,15 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
 
         public async Task<ActionResult<Booking>> AddBooking(Booking Book)
         {
-            var newHotelId = await _Booking.AddBooking(Book);
-
-            return CreatedAtAction(nameof(AddBooking), new { id = newHotelId }, newHotelId);
+            try
+            {
+                var newHotelId = await _Booking.AddBooking(Book);
+                return Ok("Booked Sucessfully!");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

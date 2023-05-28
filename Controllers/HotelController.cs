@@ -21,41 +21,72 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Hotel>>> GetHotels()
         {
-            var hotels = await _hotelRepository.GetHotels();
-            return Ok(hotels);
+            try
+            {
+                var hotels = await _hotelRepository.GetHotels();
+                return Ok(hotels);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotelById(int id)
         {
-            var hotel = await _hotelRepository.GetHotelById(id);
-            if (hotel == null)
-                return NotFound();
-            return Ok(hotel);
+            try
+            {
+                var hotel = await _hotelRepository.GetHotelById(id);
+                if (hotel == null)
+                    return NotFound();
+                return Ok(hotel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> CreateHotel(Hotel hotel)
         {
-            var newHotelId = await _hotelRepository.AddHotel(hotel);
-
-            return CreatedAtAction(nameof(GetHotelById), new { id = newHotelId }, newHotelId);
+            try
+            {
+                var newHotelId = await _hotelRepository.AddHotel(hotel);
+                return Ok("Hotel Created sucessFully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHotel(int id, Hotel hotel)
         {
-            
-            await _hotelRepository.UpdateHotel(hotel);
-            return NoContent();
+            try { 
+                await _hotelRepository.UpdateHotel(hotel);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
-            await _hotelRepository.DeleteHotel(id);
-            return NoContent();
+            try { 
+                await _hotelRepository.DeleteHotel(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

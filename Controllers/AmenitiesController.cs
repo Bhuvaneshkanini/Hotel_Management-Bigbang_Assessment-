@@ -21,34 +21,60 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Hotel>>> GetAmenities()
         {
-            var hotels = await _AmenitiesRepository.GetAmenities();
-            return Ok(hotels);
+            try
+            {
+                var hotels = await _AmenitiesRepository.GetAmenities();
+                return Ok(hotels);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetAmenitiesId(int id)
         {
-            var hotel = await _AmenitiesRepository.GetAmenitiesId(id);
-            if (hotel == null)
-                return NotFound();
-            return Ok(hotel);
+            try
+            {
+                var hotel = await _AmenitiesRepository.GetAmenitiesId(id);
+                if (hotel == null)
+                    return NotFound();
+                return Ok(hotel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> AddAmenities(Amenities amenities)
         {
-            var newHotelId = await _AmenitiesRepository.AddAmenities(amenities);
-
-            return CreatedAtAction(nameof(AddAmenities), new { id = newHotelId }, newHotelId);
+            try
+            {
+                var neamentiesId = await _AmenitiesRepository.AddAmenities(amenities);
+                return Ok("New Amenities Added Sucessfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHotel(int id, Amenities amenities)
         {
-
-            await _AmenitiesRepository.UpdateAmenities(amenities);
-            return NoContent();
+            try
+            {
+                await _AmenitiesRepository.UpdateAmenities(amenities);
+                return Ok($"{id} Updated Sucessfully");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

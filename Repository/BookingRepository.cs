@@ -28,12 +28,14 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
         public async Task<IEnumerable<Hotel>> GetHotelsByAmenities(string amenities)
         {
             return await _dbContext.Hotels.Include(h => h.Rooms).Include(h => h.Amenities)
-                .Where(h => h.Amenities.Description.Contains(amenities)).ToListAsync();
+                .Where(h => h.Amenities != null && h.Amenities.Description !=null && 
+                h.Amenities.Description.Contains(amenities)).ToListAsync();
 
         }
 
         public async Task<IEnumerable<Hotel>> GetHotelsByPrice(double min,double max)
         {
+            
             return await _dbContext.Hotels.Include(a=>a.Rooms.Where(p => p.Price >= min && p.Price <= max)).ToListAsync();
         }
 
