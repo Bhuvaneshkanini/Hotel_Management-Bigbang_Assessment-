@@ -1,10 +1,12 @@
 ﻿using Hotel_Management_Bigbang_Assessment1_.Models;
 using Hotel_Management_Bigbang_Assessment1_.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_Management_Bigbang_Assessment1_.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerBookingController : ControllerBase
@@ -50,6 +52,17 @@ namespace Hotel_Management_Bigbang_Assessment1_.Controllers
                 return NotFound();
             return Ok(hotel);
         }
+
+        [HttpPost]
+
+        public async Task<ActionResult<Booking>> AddBooking(Booking Book)
+        {
+            var newHotelId = await _Booking.AddBooking(Book);
+
+            return CreatedAtAction(nameof(AddBooking), new { id = newHotelId }, newHotelId);
+        }
+
+
 
 
 

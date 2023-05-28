@@ -37,6 +37,19 @@ namespace Hotel_Management_Bigbang_Assessment1_.Repository
             return await _dbContext.Hotels.Include(a=>a.Rooms.Where(p => p.Price >= min && p.Price <= max)).ToListAsync();
         }
 
+        public async Task<int> AddBooking(Booking book)
+        {
+            _dbContext.Bookings.Add(book);
+            await _dbContext.SaveChangesAsync();
+            return book.BookingId;
+        }
+
+        public async Task Deletebooking(int bookId)
+        {
+            var book = await _dbContext.Bookings.FindAsync(bookId);
+            _dbContext.Bookings.Remove(book);
+            await _dbContext.SaveChangesAsync();
+        }
 
     }
 }
